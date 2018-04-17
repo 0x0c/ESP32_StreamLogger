@@ -14,53 +14,53 @@ namespace ESP32
 		class Impl
 		{
 		public:
-			const char *tag = "StreamLogger";
+			std::string tag = "StreamLogger";
 			Impl(){};
 			virtual void print(const char *str) = 0;
 		};
 
-		class Error : Impl
+		class Error : public Impl
 		{
 		public:
 			void print(const char *str)
 			{
-				ESP_LOGE(this->tag, "%s", str);
+				ESP_LOGE(this->tag.c_str(), "%s", str);
 			}
 		};
 
-		class Warning : Impl
+		class Warning : public Impl
 		{
 		public:
 			void print(const char *str)
 			{
-				ESP_LOGW(this->tag, "%s", str);
+				ESP_LOGW(this->tag.c_str(), "%s", str);
 			}
 		};
 
-		class Info : Impl
+		class Info : public Impl
 		{
 		public:
 			void print(const char *str)
 			{
-				ESP_LOGI(this->tag, "%s", str);
+				ESP_LOGI(this->tag.c_str(), "%s", str);
 			}
 		};
 
-		class Debug : Impl
+		class Debug : public Impl
 		{
 		public:
 			void print(const char *str)
 			{
-				ESP_LOGD(this->tag, "%s", str);
+				ESP_LOGD(this->tag.c_str(), "%s", str);
 			}
 		};
 
-		class Verbose : Impl
+		class Verbose : public Impl
 		{
 		public:
 			void print(const char *str)
 			{
-				ESP_LOGV(this->tag, "%s", str);
+				ESP_LOGV(this->tag.c_str(), "%s", str);
 			}
 		};
 
@@ -87,6 +87,11 @@ namespace ESP32
 
 		public:
 			bool print_function = false;
+			void set_tag(std::string tag)
+			{
+				this->impl.tag = tag;
+			}
+
 			Stream &operator<<(const std::string &str)
 			{
 				if (str == Logger::endl) {

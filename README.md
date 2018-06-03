@@ -13,9 +13,9 @@ A looger using stream for esp-idf.
 Like this
 
 ```
-m2d::ESP32::Logger::Info << "Hello";
-m2d::ESP32::Logger::Info << " world"; // Easy to append characters
-m2d::ESP32::Logger::Info << m2d::ESP32::Logger::endl; // You have to insert `m2d::ESP32::Logger::endl` to print your console.
+m2d::ESP32::Logger::I << "Hello";
+m2d::ESP32::Logger::I << " world"; // Easy to append characters
+m2d::ESP32::Logger::I << m2d::ESP32::Logger::endl; // You have to insert `m2d::ESP32::Logger::endl` to print your console.
 ```
 
 ### Change tag
@@ -28,11 +28,11 @@ Just call `set_tag(std::string tag)` method.
 Following formats are available in `include/StreamLogger/Logger.h`:
 
 ```
-static Stream<Error> Error; // wrapper of ESP_LOGE
-static Stream<Warning> Warning; // wrapper of ESP_LOGW
-static Stream<Info> Info; // wrappaer of ESP_LOGI
-static Stream<Debug> Debug; // wrapper of ESP_LOGD
-static Stream<Verbose> Verbose; // wrapper of ESP_LOGV
+static Stream<Error> E; // wrapper of ESP_LOGE
+static Stream<Warning> W; // wrapper of ESP_LOGW
+static Stream<Info> I; // wrappaer of ESP_LOGI
+static Stream<Debug> D; // wrapper of ESP_LOGD
+static Stream<Verbose> V; // wrapper of ESP_LOGV
 ```
 
 ### Add your original formatter

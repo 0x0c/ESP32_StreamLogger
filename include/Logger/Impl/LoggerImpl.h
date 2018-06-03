@@ -14,7 +14,7 @@ namespace ESP32
 		class Impl
 		{
 		public:
-			const char *tag = "GROOVE";
+			const char *tag = "StreamLogger";
 			Impl(){};
 			virtual void print(const char *str) = 0;
 		};

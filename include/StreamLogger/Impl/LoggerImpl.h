@@ -2,7 +2,6 @@
 
 #include <esp_log.h>
 #include <sstream>
-#include <string>
 
 namespace m2d
 {
@@ -11,59 +10,6 @@ namespace ESP32
 	namespace Logger
 	{
 		static std::string endl = "\n";
-		class Impl
-		{
-		public:
-			std::string tag = "StreamLogger";
-			Impl(){};
-			virtual void print(const char *str) = 0;
-		};
-
-		class Error : public Impl
-		{
-		public:
-			void print(const char *str)
-			{
-				ESP_LOGE(this->tag.c_str(), "%s", str);
-			}
-		};
-
-		class Warning : public Impl
-		{
-		public:
-			void print(const char *str)
-			{
-				ESP_LOGW(this->tag.c_str(), "%s", str);
-			}
-		};
-
-		class Info : public Impl
-		{
-		public:
-			void print(const char *str)
-			{
-				ESP_LOGI(this->tag.c_str(), "%s", str);
-			}
-		};
-
-		class Debug : public Impl
-		{
-		public:
-			void print(const char *str)
-			{
-				ESP_LOGD(this->tag.c_str(), "%s", str);
-			}
-		};
-
-		class Verbose : public Impl
-		{
-		public:
-			void print(const char *str)
-			{
-				ESP_LOGV(this->tag.c_str(), "%s", str);
-			}
-		};
-
 		template <typename T>
 		class Stream
 		{
@@ -87,6 +33,12 @@ namespace ESP32
 
 		public:
 			bool print_function = false;
+
+			Stream(std::string tag = "StreamLogger")
+			{
+				this->impl.tag = tag;
+			}
+
 			void set_tag(std::string tag)
 			{
 				this->impl.tag = tag;
@@ -137,6 +89,59 @@ namespace ESP32
 			{
 				this->ss << i;
 				return *this;
+			}
+		};
+
+		class Impl
+		{
+		public:
+			std::string tag;
+			Impl() = default;
+			virtual void print(const char *str) = 0;
+		};
+
+		class Error : public Impl
+		{
+		public:
+			void print(const char *str)
+			{
+				ESP_LOGE(this->tag.c_str(), "%s", str);
+			}
+		};
+
+		class Warning : public Impl
+		{
+		public:
+			void print(const char *str)
+			{
+				ESP_LOGW(this->tag.c_str(), "%s", str);
+			}
+		};
+
+		class Info : public Impl
+		{
+		public:
+			void print(const char *str)
+			{
+				ESP_LOGI(this->tag.c_str(), "%s", str);
+			}
+		};
+
+		class Debug : public Impl
+		{
+		public:
+			void print(const char *str)
+			{
+				ESP_LOGD(this->tag.c_str(), "%s", str);
+			}
+		};
+
+		class Verbose : public Impl
+		{
+		public:
+			void print(const char *str)
+			{
+				ESP_LOGV(this->tag.c_str(), "%s", str);
 			}
 		};
 	}

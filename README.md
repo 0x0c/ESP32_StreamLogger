@@ -1,6 +1,6 @@
 # StreamLogger
 
-A looger using stream for esp-idf.
+A logger using stream for esp-idf.
 
 ## Requirements
 
